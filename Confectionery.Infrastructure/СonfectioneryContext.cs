@@ -12,6 +12,7 @@ namespace Confectionery.Infrastructure
         }
 
         public DbSet<Confection> Confections { get; set; }
+        public DbSet<ConfectionPicture> ConfectionPictures { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

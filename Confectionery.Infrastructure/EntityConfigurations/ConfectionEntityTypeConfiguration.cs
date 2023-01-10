@@ -12,25 +12,28 @@ namespace Confectionery.Infrastructure.EntityConfigurations
 
             builder.HasKey(o => o.Id).HasName("PK_Confection");
 
-            builder.Property(x => x.Name)
+            builder.Property(o => o.Name)
                 .HasMaxLength(255)
                 .IsRequired();
 
-            builder.Property(x => x.Description)
+            builder.Property(o => o.Description)
                 .HasMaxLength(1000)
                 .IsRequired();
 
-            builder.Property(x => x.Price)
+            builder.Property(o => o.Price)
                 .IsRequired();
 
-            builder.Property(x => x.Weight)
+            builder.Property(o => o.Type)
                 .IsRequired();
 
-            builder.Property(x => x.MinimumOrderCount)
+            builder.Property(o => o.Weight)
+                .IsRequired();
+
+            builder.Property(o => o.MinimumOrderCount)
                 .IsRequired()
                 .HasDefaultValue(1);
 
-            builder.Property(x => x.isOutOfStock)
+            builder.Property(o => o.IsOutOfStock)
                 .IsRequired()
                 .HasDefaultValue(false);
         }
