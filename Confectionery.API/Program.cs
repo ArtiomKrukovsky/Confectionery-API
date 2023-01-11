@@ -1,11 +1,33 @@
+using Confectionery.API.Extensions;
+using MediatR;
+using System.Reflection;
+using Ñonfectionery.API.Application.Behaviors;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+ConfigurationManager configuration = builder.Configuration;
+IWebHostEnvironment environment = builder.Environment;
+
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
+// Configure Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// Configure DB
+builder.Services.AddCustomDbContext(configuration);
+
+// Configure Mapster
+builder.Services.AddMapster();
+
+// Configure MediatR
+builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
+builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidatorBehavior<,>));
+builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
+
+// Configure Repositories
 
 var app = builder.Build();
 
