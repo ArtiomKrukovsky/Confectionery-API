@@ -19,7 +19,7 @@ namespace Confectionery.API.Extensions
                 options.UseSqlServer(configuration.GetConnectionString(DefaultConnectionString),
                     sqlServerOptionsAction: sqlOptions =>
                     {
-                        sqlOptions.MigrationsAssembly("Сonfectionery.Infrastructure");
+                        sqlOptions.MigrationsAssembly("Confectionery.Infrastructure");
                         sqlOptions.EnableRetryOnFailure(maxRetryCount: 15, maxRetryDelay: TimeSpan.FromSeconds(30), errorNumbersToAdd: null);
                     });
                 }, ServiceLifetime.Scoped
