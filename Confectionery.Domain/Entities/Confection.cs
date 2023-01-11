@@ -13,7 +13,7 @@ namespace Confectionery.Domain.Entities
         public int MinimumOrderCount { get; set; }
         public bool IsOutOfStock { get; set; }
 
-        public bool IsOrderCountLimited => MinimumOrderCount > 0;
+        public bool IsOrderCountLimited => MinimumOrderCount > 1;
 
         public List<ConfectionPicture> Pictures { get; set; }
 

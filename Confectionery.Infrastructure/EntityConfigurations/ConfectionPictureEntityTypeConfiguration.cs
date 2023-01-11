@@ -17,6 +17,7 @@ namespace Confectionery.Infrastructure.EntityConfigurations
                 .IsRequired();
 
             builder.Property(o => o.Extension)
+                .HasMaxLength(50)
                 .IsRequired();
 
             builder.Property(o => o.Content)
