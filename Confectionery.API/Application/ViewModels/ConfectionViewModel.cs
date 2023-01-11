@@ -8,6 +8,6 @@
         public decimal Weight { get; set; }
         public bool IsOrderCountLimited { get; set; }
         public int MinimumOrderCount { get; set; }
-        public bool isOutOfStock { get; set; }
+        public bool IsOutOfStock { get; set; }
     }
 }
