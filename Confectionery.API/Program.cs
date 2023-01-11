@@ -28,6 +28,7 @@ builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidatorBeha
 builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
 
 // Configure Repositories
+builder.Services.AddRepositories();
 
 var app = builder.Build();
 

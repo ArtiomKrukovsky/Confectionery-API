@@ -1,4 +1,5 @@
 ﻿using Confectionery.API.Application.Queries;
+using Confectionery.API.Application.Queries.Confection;
 using Confectionery.API.Application.ViewModels;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
