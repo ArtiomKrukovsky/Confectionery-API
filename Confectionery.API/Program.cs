@@ -19,6 +19,9 @@ builder.Services.AddSwaggerGen();
 // Configure DB
 builder.Services.AddCustomDbContext(configuration);
 
+// Configure Cors
+builder.Services.AddCorsPolicies();
+
 // Configure Mapster
 builder.Services.AddMapster();
 
@@ -31,6 +34,7 @@ builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavi
 builder.Services.AddRepositories();
 
 var app = builder.Build();
+app.UseCors("AllowedCorsOrigins");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

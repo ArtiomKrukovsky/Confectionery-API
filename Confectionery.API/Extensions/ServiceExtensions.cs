@@ -26,6 +26,22 @@ namespace Confectionery.API.Extensions
             );
         }
 
+        public static void AddCorsPolicies(this IServiceCollection services)
+        {
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowedCorsOrigins",
+                    policy =>
+                    {
+                        policy.WithOrigins("http://localhost:4200/")
+                            .AllowAnyMethod()
+                            .AllowAnyHeader()
+                            .SetIsOriginAllowed(origin => true)
+                            .AllowCredentials();
+                    });
+            });
+        }
+
         public static void AddMapster(this IServiceCollection services)
         {
             var config = new TypeAdapterConfig { RequireExplicitMapping = true };
