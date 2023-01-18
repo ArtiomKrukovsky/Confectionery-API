@@ -17,6 +17,12 @@ namespace Confectionery.API.Mappings
                 .Map(d => d.IsOrderCountLimited, d => d.IsOrderCountLimited)
                 .Map(d => d.MinimumOrderCount, d => d.MinimumOrderCount)
                 .Map(d => d.IsOutOfStock, d => d.IsOutOfStock);
+
+            config.NewConfig<ConfectionPicture, ConfectionPictureViewModel>()
+                .Map(d => d.Id, s => s.Id)
+                .Map(d => d.ShortName, s => s.ShortName)
+                .Map(d => d.Extension, s => s.Extension)
+                .Map(d => d.Content, d => d.Content);
         }
     }
 }

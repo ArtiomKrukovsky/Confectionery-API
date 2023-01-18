@@ -1,5 +1,4 @@
-﻿using Confectionery.API.Application.Queries;
-using Confectionery.API.Application.Queries.Confection;
+﻿using Confectionery.API.Application.Queries.Confection;
 using Confectionery.API.Application.ViewModels;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -24,11 +23,19 @@ namespace Confectionery.API.Controllers
         }
 
         [HttpGet]
-        [Route("confectionId/{confectionId}")]
+        [Route("{confectionId}")]
         public async Task<ActionResult<ConfectionViewModel>> GetConfectionAsync(Guid confectionId)
         {
             var confection = await _mediator.Send(new GetConfectionQuery(confectionId));
             return confection;
+        }
+
+        [HttpGet]
+        [Route("{confectionId}/picture")]
+        public async Task<ActionResult<ConfectionPictureViewModel>> GetConfectionPictureAsync(Guid confectionId)
+        {
+            var confectionPicture = await _mediator.Send(new GetConfectionPictureQuery(confectionId));
+            return confectionPicture;
         }
     }
 }

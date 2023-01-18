@@ -5,8 +5,8 @@ namespace Confectionery.Infrastructure.Repositories
 {
     public abstract class BaseRepository<TEntity> : IRepository<TEntity> where TEntity : Entity
     {
-        private readonly СonfectioneryContext _context;
-        private readonly DbSet<TEntity> _dbSet;
+        protected readonly СonfectioneryContext _context;
+        protected readonly DbSet<TEntity> _dbSet;
 
         public BaseRepository(СonfectioneryContext context)
         {

@@ -5,5 +5,6 @@ namespace Confectionery.Domain.IRepositories
 {
     public interface IConfectionPictureRepository : IRepository<ConfectionPicture>
     {
+        Task<ConfectionPicture> GetByConfectionIdAsync(Guid confectionId);
     }
 }
