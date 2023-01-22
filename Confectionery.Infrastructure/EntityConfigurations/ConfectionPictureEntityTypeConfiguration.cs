@@ -25,7 +25,7 @@ namespace Confectionery.Infrastructure.EntityConfigurations
 
             builder.HasOne(c => c.Confection)
                 .WithMany(p => p.Pictures)
-                .HasForeignKey(c => c.Id)
+                .HasForeignKey(c => c.ConfectionId)
                 .HasConstraintName("FK_ConfectionPicture_Confection")
                 .OnDelete(DeleteBehavior.Cascade);
         }
