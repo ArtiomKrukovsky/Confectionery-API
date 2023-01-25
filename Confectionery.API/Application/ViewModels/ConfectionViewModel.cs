@@ -9,5 +9,7 @@
         public bool IsOrderCountLimited { get; set; }
         public int MinimumOrderCount { get; set; }
         public bool IsOutOfStock { get; set; }
+
+        public List<ConfectionPictureViewModel> Pictures { get; set; }
     }
 }

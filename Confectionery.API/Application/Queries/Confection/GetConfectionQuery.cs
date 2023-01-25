@@ -32,7 +32,7 @@ namespace Confectionery.API.Application.Queries.Confection
 
         public async Task<ConfectionViewModel> Handle(GetConfectionQuery request, CancellationToken cancellationToken)
         {
-            var confection = await _confectionRepository.GetAsync(request.ConfectionId);
+            var confection = await _confectionRepository.GetConfectionWithPicturesAsync(request.ConfectionId);
 
             return _mapper.Map<ConfectionViewModel>(confection);
         }

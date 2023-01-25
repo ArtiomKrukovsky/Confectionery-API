@@ -25,11 +25,12 @@ namespace Confectionery.API.Application.Queries.Confection
 
         public async Task<List<ConfectionMappingViewModel>> Handle(GetConfectionMappingsQuery request, CancellationToken cancellationToken)
         {
-            var confections = await _confectionRepository.GetAsync();
+            var confections = await _confectionRepository.GetConfectionsWithPicturesAsync();
 
             var groupedConfectionsByType = confections.GroupBy(confection => confection.Type);
 
             return groupedConfectionsByType
+                .OrderBy(group => group.Key)
                 .Select(group => new ConfectionMappingViewModel
                 {
                     ConfectionType = group.Key,
