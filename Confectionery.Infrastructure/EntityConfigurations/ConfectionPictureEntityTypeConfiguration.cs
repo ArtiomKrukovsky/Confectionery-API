@@ -12,6 +12,9 @@ namespace Confectionery.Infrastructure.EntityConfigurations
 
             builder.HasKey(o => o.Id).HasName("PK_ConfectionPicture");
 
+            builder.Property(b => b.Id)
+                .HasDefaultValueSql("newsequentialid()");
+
             builder.Property(o => o.ShortName)
                 .HasMaxLength(255)
                 .IsRequired();

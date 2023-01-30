@@ -1,12 +1,23 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Confectionery.API.Application.Commands.Order;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Confectionery.API.Controllers
 {
-    public class OrderController : Controller
+    [Route("api/[controller]")]
+    public class OrderController : ControllerBase
     {
-        public IActionResult Index()
+        private readonly IMediator _mediator;
+
+        public OrderController(IMediator mediator)
         {
-            return View();
+            _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<bool>> CreateOrderAsync([FromBody] CreateOrderCommand createOrderCommand)
+        {
+            return await _mediator.Send(createOrderCommand);
         }
     }
 }

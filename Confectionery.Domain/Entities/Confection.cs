@@ -16,6 +16,7 @@ namespace Confectionery.Domain.Entities
         public bool IsOrderCountLimited => MinimumOrderCount > 1;
 
         public List<ConfectionPicture> Pictures { get; set; }
+        public List<Order> Orders { get; set; }
 
     }
 }
