@@ -31,7 +31,10 @@ namespace Confectionery.API.Application.Commands.Order
     {
         public CreateOrderCommandValidation()
         {
-
+            RuleFor(c => c.ConfectionId).NotNull().NotEmpty();
+            RuleFor(c => c.UserId).NotNull().NotEmpty();
+            RuleFor(c => c.UnitPrice).NotNull().GreaterThan(0);
+            RuleFor(c => c.Quantity).NotNull().GreaterThanOrEqualTo(1);
         }
     }
 

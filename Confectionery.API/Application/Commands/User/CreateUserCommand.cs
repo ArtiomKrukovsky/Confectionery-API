@@ -2,6 +2,7 @@
 using Confectionery.Domain.IRepositories;
 using FluentValidation;
 using MediatR;
+using System.Text.RegularExpressions;
 
 namespace Confectionery.API.Application.Queries.User
 {
@@ -27,8 +28,19 @@ namespace Confectionery.API.Application.Queries.User
         public class CreateUserCommandValidation : AbstractValidator<CreateUserCommand>
         {
             public CreateUserCommandValidation()
-            {
-
+            {   
+                RuleFor(c => c.FullName)
+                    .Length(3, 550)
+                    .NotEmpty().WithMessage("Full name is required.");
+                RuleFor(s => s.Email)
+                    .NotEmpty().WithMessage("Email address is required.")
+                    .EmailAddress().WithMessage("Email is not required.");
+                RuleFor(c => c.MobileNumber)
+                    .NotEmpty()
+                    .NotNull().WithMessage("Mobile number is required.")
+                    .MinimumLength(7).WithMessage("PhoneNumber must not be less than 7 characters.")
+                    .MaximumLength(11).WithMessage("PhoneNumber must not exceed 11 characters.")
+                    .Matches(new Regex(@"((\(\d{3}\) ?)|(\d{3}-))?\d{3}-\d{4}")).WithMessage("Mobile number is not valid");
             }
         }
 
