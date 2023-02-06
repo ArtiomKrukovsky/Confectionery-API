@@ -13,18 +13,14 @@ namespace Confectionery.Domain.Entities
         public User User { get; set; }
         public Confection Confection { get; set; }
 
-        public Order(Guid confectionId, decimal unitPrice, int quentity)
+        public Order(Guid confectionId, Guid userId, decimal unitPrice, int quentity)
         {
             ConfectionId = confectionId;
+            UserId = userId;
             UnitPrice = unitPrice;
             Quentity = quentity;
 
             CreatedDtm = DateTime.UtcNow;
-        }
-
-        public void SetUser(User user)
-        {
-            User = user;
         }
     }
 }

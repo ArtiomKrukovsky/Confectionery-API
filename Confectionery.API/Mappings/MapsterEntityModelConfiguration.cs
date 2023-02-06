@@ -23,6 +23,13 @@ namespace Confectionery.API.Mappings
                 .Map(d => d.Id, s => s.Id)
                 .Map(d => d.ShortName, s => s.ShortName)
                 .Map(d => d.Url, d => d.Url);
+
+            config.NewConfig<User, UserViewModel>()
+                .Map(d => d.Id, s => s.Id)
+                .Map(d => d.FullName, s => s.FullName)
+                .Map(d => d.Email, d => d.Email)
+                .Map(d => d.InstagramProfile, d => d.InstagramProfile)
+                .Map(d => d.MobileNumber, d => d.MobileNumber);
         }
     }
 }

@@ -5,36 +5,25 @@ using MediatR;
 using System.Net;
 using System.Net.Mail;
 
-namespace Confectionery.API.Application.Queries.Order
+namespace Confectionery.API.Application.Commands.Order
 {
     public class CreateOrderCommand : ICommand<bool>
     {
         public Guid ConfectionId { get; set; }
+        public Guid UserId { get; set; }
         public decimal UnitPrice { get; set; }
         public int Quantity { get; set; }
 
-        public string FullName { get; set; }
-        public string Email { get; set; }
-        public string InstagramProfile { get; set; }
-        public string MobileNumber { get; set; }
-
         public CreateOrderCommand(
             Guid confectionId,
+            Guid userId,
             decimal unitPrice,
-            int quantity,
-            string fullName,
-            string email,
-            string instagramProfile,
-            string mobileNumber)
+            int quantity)
         {
             ConfectionId = confectionId;
+            UserId = userId;
             UnitPrice = unitPrice;
             Quantity = quantity;
-
-            FullName = fullName;
-            Email = email;
-            InstagramProfile = instagramProfile;
-            MobileNumber = mobileNumber;
         }
     }
 
@@ -59,29 +48,17 @@ namespace Confectionery.API.Application.Queries.Order
 
         public async Task<bool> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
         {
-            var user = await _userRepository.GetUserByEmailAsync(request.Email);
-
-            if (user is null)
-            {
-                user = new Domain.Entities.User(
-                    request.FullName, 
-                    request.Email, 
-                    request.InstagramProfile, 
-                    request.MobileNumber); 
-            }
-
             var order = new Domain.Entities.Order(
                 request.ConfectionId,
+                request.UserId,
                 request.UnitPrice,
                 request.Quantity);
 
-            // todo: use domain events instead
-            order.SetUser(user);
-
             await _orderRepository.CreateAsync(order);
-            await _userRepository.SaveChangesAsync(cancellationToken);
+            await _orderRepository.SaveChangesAsync(cancellationToken);
 
-            await SendEmailAsync(request.Email);
+            var user = await _userRepository.GetAsync(request.UserId);
+            await SendEmailAsync(user.Email);
 
             return true;
         }

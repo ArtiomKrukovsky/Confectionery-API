@@ -14,7 +14,7 @@ namespace Confectionery.Infrastructure.Repositories
         {
             return await _context.Users
                 .FirstOrDefaultAsync(user => 
-                    user.Email.Equals(email, StringComparison.OrdinalIgnoreCase)
+                    user.Email == email
                 );
         }
     }
