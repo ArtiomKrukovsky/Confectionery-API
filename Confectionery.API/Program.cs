@@ -30,6 +30,9 @@ builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
 builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidatorBehavior<,>));
 builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
 
+// Configure Options
+builder.Services.AddOptions(configuration);
+
 // Configure Repositories
 builder.Services.AddRepositories();
 

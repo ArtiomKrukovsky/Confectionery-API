@@ -1,4 +1,5 @@
-﻿using Confectionery.Domain.IRepositories;
+﻿using Confectionery.API.Options;
+using Confectionery.Domain.IRepositories;
 using Confectionery.Infrastructure;
 using Confectionery.Infrastructure.Repositories;
 using Mapster;
@@ -57,6 +58,11 @@ namespace Confectionery.API.Extensions
             services.AddScoped<IConfectionPictureRepository, ConfectionPictureRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
+        }
+
+        public static void AddOptions(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.Configure<EmailSenderOptions>(configuration.GetSection(EmailSenderOptions.EmailSender));
         }
     }
 }
