@@ -1,4 +1,6 @@
-﻿namespace Confectionery.API.Application.ViewModels
+﻿using Confectionery.Domain.Enums;
+
+namespace Confectionery.API.Application.ViewModels
 {
     public class ConfectionViewModel : BaseViewModel
     {
@@ -6,6 +8,7 @@
         public string Description { get; set; }
         public decimal Price { get; set; }
         public decimal Weight { get; set; }
+        public ConfectionType ConfectionType { get; set; }
         public bool IsOrderCountLimited { get; set; }
         public int MinimumOrderCount { get; set; }
         public bool IsOutOfStock { get; set; }

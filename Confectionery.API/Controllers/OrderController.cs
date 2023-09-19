@@ -1,4 +1,6 @@
 ﻿using Confectionery.API.Application.Commands.Order;
+using Confectionery.API.Application.Queries.Order;
+using Confectionery.API.Application.ViewModels;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,6 +14,13 @@ namespace Confectionery.API.Controllers
         public OrderController(IMediator mediator)
         {
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<List<OrderDetailViewModel>>> GerOrderDetails()
+        {
+            var orderDetails = await _mediator.Send(new GetOrderDetailsQuery());
+            return orderDetails;
         }
 
         [HttpPost]

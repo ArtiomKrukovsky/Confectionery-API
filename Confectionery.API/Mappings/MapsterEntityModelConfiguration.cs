@@ -14,6 +14,7 @@ namespace Confectionery.API.Mappings
                 .Map(d => d.Description, s => s.Description)
                 .Map(d => d.Price, d => d.Price)
                 .Map(d => d.Weight, d => d.Weight)
+                .Map(d => d.ConfectionType, d => d.Type)
                 .Map(d => d.IsOrderCountLimited, d => d.IsOrderCountLimited)
                 .Map(d => d.MinimumOrderCount, d => d.MinimumOrderCount)
                 .Map(d => d.IsOutOfStock, d => d.IsOutOfStock)
@@ -30,6 +31,15 @@ namespace Confectionery.API.Mappings
                 .Map(d => d.Email, d => d.Email)
                 .Map(d => d.InstagramProfile, d => d.InstagramProfile)
                 .Map(d => d.MobileNumber, d => d.MobileNumber);
+
+            config.NewConfig<Order, OrderDetailViewModel>()
+                .Map(d => d.Id, s => s.Id)
+                .Map(d => d.CustomerName, s => s.User.FullName)
+                .Map(d => d.ProductName, d => d.Confection.Name)
+                //.Map(d => d.Status, d => d.Status)
+                .Map(d => d.CreatedDate, d => d.CreatedDtm)
+                .Map(d => d.UnitPrice, d => d.UnitPrice)
+                .Map(d => d.Quantity, d => d.Quentity);
         }
     }
 }

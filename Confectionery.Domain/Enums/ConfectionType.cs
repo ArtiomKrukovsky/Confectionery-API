@@ -5,7 +5,6 @@
         Cakes,
         Desserts,
         Tartelettes,
-        Meringue,
         Marshmallow,
         Marmalade
     }

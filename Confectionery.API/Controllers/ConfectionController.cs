@@ -16,10 +16,18 @@ namespace Confectionery.API.Controllers
         }
 
         [HttpGet]
+        [Route("mappings")]
         public async Task<ActionResult<List<ConfectionMappingViewModel>>> GetConfectionMappingsAsync()
         {
             var confectionMappings = await _mediator.Send(new GetConfectionMappingsQuery());
             return confectionMappings;
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<List<ConfectionViewModel>>> GetConfectionsAsync()
+        {
+            var confections = await _mediator.Send(new GetConfectionsQuery());
+            return confections;
         }
 
         [HttpGet]
