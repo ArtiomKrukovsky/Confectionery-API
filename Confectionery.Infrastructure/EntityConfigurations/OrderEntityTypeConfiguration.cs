@@ -21,6 +21,9 @@ namespace Confectionery.Infrastructure.EntityConfigurations
             builder.Property(o => o.Quentity)
                 .IsRequired();
 
+            builder.Property(o => o.Status)
+                .IsRequired();
+            
             builder.Property(o => o.CreatedDtm)
                 .IsRequired();
 

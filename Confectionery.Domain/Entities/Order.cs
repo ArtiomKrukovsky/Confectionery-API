@@ -9,7 +9,7 @@ namespace Confectionery.Domain.Entities
         public Guid UserId { get; set; }
         public decimal UnitPrice { get; set; }
         public int Quentity { get; set; }
-        //public OrderStatus Status { get; set; }
+        public OrderStatus Status { get; set; }
         public DateTime CreatedDtm { get; set; }
 
         public User User { get; set; }
@@ -22,26 +22,26 @@ namespace Confectionery.Domain.Entities
             UnitPrice = unitPrice;
             Quentity = quentity;
 
-            //Status = OrderStatus.Submitted;
+            Status = OrderStatus.Submitted;
             CreatedDtm = DateTime.UtcNow;
         }
 
         public void SetCancelledStatus()
         {
-            //if (Status == OrderStatus.Paid ||
-            //    Status == OrderStatus.Shipping ||
-            //    Status == OrderStatus.Cooking)
-            //{
-            //    StatusChangeException(OrderStatus.Cancelled);
-            //}
+            if (Status == OrderStatus.Paid ||
+                Status == OrderStatus.Shipping ||
+                Status == OrderStatus.Cooking)
+            {
+                StatusChangeException(OrderStatus.Cancelled);
+            }
 
-            //Status = OrderStatus.Cancelled;
+            Status = OrderStatus.Cancelled;
         }
 
-        //private void StatusChangeException(OrderStatus orderStatusToChange)
-        //{
-        //    throw new ArgumentException($"Is not possible to change the order status from {nameof(Status)} " +
-        //        $"to {nameof(orderStatusToChange)}.");
-        //}
+        private void StatusChangeException(OrderStatus orderStatusToChange)
+        {
+            throw new ArgumentException($"Is not possible to change the order status from {nameof(Status)} " +
+                $"to {nameof(orderStatusToChange)}.");
+        }
     }
 }

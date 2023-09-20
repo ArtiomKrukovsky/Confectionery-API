@@ -6,6 +6,7 @@
         Paid,
         Cooking,
         Shipping,
+        Completed,
         Cancelled
     }
 }
