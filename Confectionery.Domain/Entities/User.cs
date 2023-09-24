@@ -1,22 +1,16 @@
-﻿using Confectionery.Domain.Seedwork;
+﻿using Confectionery.Domain.Enums;
+using Confectionery.Domain.Seedwork;
 
 namespace Confectionery.Domain.Entities
 {
     public class User : Entity
     {
-        public string FullName { get; set; }
+        public string Name { get; set; }
+        public string Surname { get; set; }
         public string Email { get; set; }
-        public string InstagramProfile { get; set; }
-        public string MobileNumber { get; set; }
+        public string PasswordHash { get; set; }
 
-        public List<Order> Orders { get; set; }
-
-        public User(string fullName, string email, string instagramProfile, string mobileNumber)
-        {
-            FullName = fullName;
-            Email = email;
-            InstagramProfile = instagramProfile;
-            MobileNumber = mobileNumber;
-        }
+        public Role Role { get; set; }
+        public RefreshToken RefreshToken { get; set; }
     }
 }

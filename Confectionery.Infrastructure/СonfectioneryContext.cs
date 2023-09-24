@@ -15,6 +15,8 @@ namespace Confectionery.Infrastructure
         public DbSet<ConfectionPicture> ConfectionPictures { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<Client> Clients { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -22,6 +24,8 @@ namespace Confectionery.Infrastructure
             modelBuilder.ApplyConfiguration(new ConfectionPictureEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new ClientEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new OrderEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new UserEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new RefreshTokenEntityTypeConfiguration());
         }
     }
 }
