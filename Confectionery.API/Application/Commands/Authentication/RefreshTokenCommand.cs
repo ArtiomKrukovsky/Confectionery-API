@@ -34,12 +34,12 @@ namespace Confectionery.API.Application.Commands.Authentication
 
     public class RefreshTokenCommandHandler : IRequestHandler<RefreshTokenCommand, RefreshTokenViewModel>
     {
-        public readonly IUserRepository _userRepository;
+        public readonly IClientRepository _clientRepository;
         public readonly IJwtTokenService _jwtTokenService;
 
-        public RefreshTokenCommandHandler(IUserRepository userRepository, IJwtTokenService jwtTokenService)
+        public RefreshTokenCommandHandler(IClientRepository clientRepository, IJwtTokenService jwtTokenService)
         {
-            _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
+            _clientRepository = clientRepository ?? throw new ArgumentNullException(nameof(clientRepository));
             _jwtTokenService = jwtTokenService ?? throw new ArgumentNullException(nameof(jwtTokenService));
         }
 
@@ -48,14 +48,14 @@ namespace Confectionery.API.Application.Commands.Authentication
             var principal = _jwtTokenService.GetPrincipalFromExpiredToken(request.AccessToken);
             var email = principal.FindFirst(JwtClaimNames.UserNameClaimName);
 
-            var user = await _userRepository.GetUserByEmailAsync(email!.Value);
+            var client = await _clientRepository.GetClientByEmailAsync(email!.Value);
 
-            if (user is null || user.RefreshToken != request.RefreshToken || user.RefreshTokenExpirationTime <= DateTime.Now)
-            {
-                throw new BadHttpRequestException("Invalid client request.");
-            }
+            //if (client is null || client.RefreshToken != request.RefreshToken || client.RefreshTokenExpirationTime <= DateTime.Now)
+            //{
+            //    throw new BadHttpRequestException("Invalid client request.");
+            //}
 
-            var newAccessToken = _jwtTokenService.GenerateAccessToken(user);
+            var newAccessToken = _jwtTokenService.GenerateAccessToken(client);
             var newRefreshToken = _jwtTokenService.GenerateRefreshToken();
 
             return new RefreshTokenViewModel(newAccessToken, newRefreshToken);

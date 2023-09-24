@@ -6,19 +6,19 @@ namespace Confectionery.Domain.Entities
     public class Order : Entity
     {
         public Guid ConfectionId { get; set; }
-        public Guid UserId { get; set; }
+        public Guid ClientId { get; set; }
         public decimal UnitPrice { get; set; }
         public int Quentity { get; set; }
         public OrderStatus Status { get; set; }
         public DateTime CreatedDtm { get; set; }
 
-        public User User { get; set; }
+        public Client Client { get; set; }
         public Confection Confection { get; set; }
 
-        public Order(Guid confectionId, Guid userId, decimal unitPrice, int quentity)
+        public Order(Guid confectionId, Guid clientId, decimal unitPrice, int quentity)
         {
             ConfectionId = confectionId;
-            UserId = userId;
+            ClientId = clientId;
             UnitPrice = unitPrice;
             Quentity = quentity;
 

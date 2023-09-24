@@ -3,8 +3,8 @@ using Confectionery.Domain.Seedwork;
 
 namespace Confectionery.Domain.IRepositories
 {
-    public interface IUserRepository : IRepository<User>
+    public interface IClientRepository : IRepository<Client>
     {
-        Task<User> GetUserByEmailAsync(string email);
+        Task<Client> GetClientByEmailAsync(string email);
     }
 }

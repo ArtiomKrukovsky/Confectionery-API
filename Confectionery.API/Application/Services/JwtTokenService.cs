@@ -20,9 +20,9 @@ namespace Confectionery.API.Application.Services
             _jwtOptions = jwtOptions.Value ?? throw new ArgumentNullException(nameof(jwtOptions));
         }
 
-        public string GenerateAccessToken(User user)
+        public string GenerateAccessToken(Client client)
         {
-            var claims = CreateClaims(user);
+            var claims = CreateClaims(client);
 
             var secret = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtOptions.Secret));
 
@@ -70,7 +70,7 @@ namespace Confectionery.API.Application.Services
             return principal;
         }
 
-        private Claim[] CreateClaims(User user)
+        private Claim[] CreateClaims(Client client)
         {
             // todo: do we need roles???
 
@@ -79,8 +79,8 @@ namespace Confectionery.API.Application.Services
                 new Claim(JwtRegisteredClaimNames.Sub, _jwtOptions.Subject),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString()),
-                new Claim(JwtClaimNames.UserIdClaimName, user.Id.ToString()),
-                new Claim(JwtClaimNames.UserNameClaimName, user.FullName),
+                new Claim(JwtClaimNames.UserIdClaimName, client.Id.ToString()),
+                new Claim(JwtClaimNames.UserNameClaimName, client.FullName),
             };
         }
     }

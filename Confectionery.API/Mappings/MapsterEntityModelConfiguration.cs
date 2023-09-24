@@ -25,7 +25,7 @@ namespace Confectionery.API.Mappings
                 .Map(d => d.ShortName, s => s.ShortName)
                 .Map(d => d.Url, d => d.Url);
 
-            config.NewConfig<User, UserViewModel>()
+            config.NewConfig<Client, ClientViewModel>()
                 .Map(d => d.Id, s => s.Id)
                 .Map(d => d.FullName, s => s.FullName)
                 .Map(d => d.Email, d => d.Email)
@@ -34,7 +34,7 @@ namespace Confectionery.API.Mappings
 
             config.NewConfig<Order, OrderDetailViewModel>()
                 .Map(d => d.Id, s => s.Id)
-                .Map(d => d.CustomerName, s => s.User.FullName)
+                .Map(d => d.CustomerName, s => s.Client.FullName)
                 .Map(d => d.ProductName, d => d.Confection.Name)
                 //.Map(d => d.Status, d => d.Status)
                 .Map(d => d.CreatedDate, d => d.CreatedDtm)

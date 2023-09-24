@@ -13,7 +13,7 @@ namespace Confectionery.Infrastructure.Repositories
         public async Task<List<Order>> GetOrdersWithDetailsAsync()
         {
             return await _context.Orders
-                .Include(x => x.User)
+                .Include(x => x.Client)
                 .Include(x => x.Confection)
                 .ToListAsync();
         }

@@ -27,10 +27,10 @@ namespace Confectionery.Infrastructure.EntityConfigurations
             builder.Property(o => o.CreatedDtm)
                 .IsRequired();
 
-            builder.HasOne(c => c.User)
+            builder.HasOne(c => c.Client)
                 .WithMany(p => p.Orders)
-                .HasForeignKey(c => c.UserId)
-                .HasConstraintName("FK_Order_User")
+                .HasForeignKey(c => c.ClientId)
+                .HasConstraintName("FK_Order_Client")
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasOne(c => c.Confection)

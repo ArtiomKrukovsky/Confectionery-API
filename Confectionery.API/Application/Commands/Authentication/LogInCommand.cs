@@ -34,25 +34,25 @@ namespace Confectionery.API.Application.Commands.Authentication
 
     public class LogInCommandHandler : IRequestHandler<LogInCommand, LogInViewModel>
     {
-        public readonly IUserRepository _userRepository;
+        public readonly IClientRepository _clientRepository;
         public readonly IJwtTokenService _jwtTokenService;
 
-        public LogInCommandHandler(IUserRepository userRepository, IJwtTokenService jwtTokenService)
+        public LogInCommandHandler(IClientRepository clientRepository, IJwtTokenService jwtTokenService)
         {
-            _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
+            _clientRepository = clientRepository ?? throw new ArgumentNullException(nameof(clientRepository));
             _jwtTokenService = jwtTokenService ?? throw new ArgumentNullException(nameof(jwtTokenService));
         }
 
         public async Task<LogInViewModel> Handle(LogInCommand request, CancellationToken cancellationToken)
         {
-            var user = await _userRepository.GetUserByEmailAsync(request.Email); // todo: get user by email and password
+            var client = await _clientRepository.GetClientByEmailAsync(request.Email); // todo: get client by email and password
 
-            if (user is null)
+            if (client is null)
             {
-                throw new ArgumentException($"Authentication failed, user with set credentials not found.");
+                throw new ArgumentException($"Authentication failed, client with set credentials not found.");
             }
 
-            var accessToken = _jwtTokenService.GenerateAccessToken(user);
+            var accessToken = _jwtTokenService.GenerateAccessToken(client);
             var refreshToken = _jwtTokenService.GenerateRefreshToken();
 
             return new LogInViewModel(accessToken, refreshToken);

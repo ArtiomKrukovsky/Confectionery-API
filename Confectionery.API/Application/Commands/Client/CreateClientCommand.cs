@@ -4,16 +4,16 @@ using FluentValidation;
 using MediatR;
 using System.Text.RegularExpressions;
 
-namespace Confectionery.API.Application.Queries.User
+namespace Confectionery.API.Application.Queries.Client
 {
-    public class CreateUserCommand : ICommand<Guid>
+    public class CreateClientCommand : ICommand<Guid>
     {
         public string FullName { get; set; }
         public string Email { get; set; }
         public string InstagramProfile { get; set; }
         public string MobileNumber { get; set; }
 
-        public CreateUserCommand(
+        public CreateClientCommand(
             string fullName,
             string email,
             string instagramProfile,
@@ -25,9 +25,9 @@ namespace Confectionery.API.Application.Queries.User
             MobileNumber = mobileNumber;
         }
 
-        public class CreateUserCommandValidation : AbstractValidator<CreateUserCommand>
+        public class CreateClientCommandValidation : AbstractValidator<CreateClientCommand>
         {
-            public CreateUserCommandValidation()
+            public CreateClientCommandValidation()
             {   
                 RuleFor(c => c.FullName)
                     .Length(3, 550)
@@ -44,35 +44,35 @@ namespace Confectionery.API.Application.Queries.User
             }
         }
 
-        public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Guid>
+        public class CreateClientCommandHandler : IRequestHandler<CreateClientCommand, Guid>
         {
-            private readonly IUserRepository _userRepository;
+            private readonly IClientRepository _clientRepository;
 
-            public CreateUserCommandHandler(IUserRepository userRepository)
+            public CreateClientCommandHandler(IClientRepository clientRepository)
             {
-                _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
+                _clientRepository = clientRepository ?? throw new ArgumentNullException(nameof(clientRepository));
             }
 
-            public async Task<Guid> Handle(CreateUserCommand request, CancellationToken cancellationToken)
+            public async Task<Guid> Handle(CreateClientCommand request, CancellationToken cancellationToken)
             {
-                var user = await _userRepository.GetUserByEmailAsync(request.Email);
+                var client = await _clientRepository.GetClientByEmailAsync(request.Email);
 
-                if (user is not null)
+                if (client is not null)
                 {
-                    throw new ArgumentException($"Unable to create a user account. " +
-                        $"The user with the following email:'{request.Email}' is exist");
+                    throw new ArgumentException($"Unable to create a client account. " +
+                        $"The client with the following email:'{request.Email}' is exist");
                 }
 
-                user = new Domain.Entities.User(
+                client = new Domain.Entities.Client(
                     request.FullName,
                     request.Email,
                     request.InstagramProfile,
                     request.MobileNumber);
 
-                await _userRepository.CreateAsync(user);
-                await _userRepository.SaveChangesAsync(cancellationToken);
+                await _clientRepository.CreateAsync(client);
+                await _clientRepository.SaveChangesAsync(cancellationToken);
 
-                return user.Id;
+                return client.Id;
             }
         }
     }

@@ -4,13 +4,13 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Confectionery.Infrastructure.EntityConfigurations
 {
-    public class UserEntityTypeConfiguration : IEntityTypeConfiguration<User>
+    public class ClientEntityTypeConfiguration : IEntityTypeConfiguration<Client>
     {
-        public void Configure(EntityTypeBuilder<User> builder)
+        public void Configure(EntityTypeBuilder<Client> builder)
         {
-            builder.ToTable("User");
+            builder.ToTable("Client");
 
-            builder.HasKey(o => o.Id).HasName("PK_User");
+            builder.HasKey(o => o.Id).HasName("PK_Client");
 
             builder.Property(b => b.Id)
                 .HasDefaultValueSql("newsequentialid()");
@@ -32,7 +32,7 @@ namespace Confectionery.Infrastructure.EntityConfigurations
                 .IsRequired();
 
             builder.ToTable(o => 
-                o.HasCheckConstraint("CK_User_MobileNumber", "[MobileNumber] NOT LIKE '%[^0-9]%'")
+                o.HasCheckConstraint("CK_Client_MobileNumber", "[MobileNumber] NOT LIKE '%[^0-9]%'")
             );
         }
     }
