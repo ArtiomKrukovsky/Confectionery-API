@@ -1,4 +1,6 @@
-﻿using Confectionery.API.Options;
+﻿using Confectionery.API.Application.Services;
+using Confectionery.API.Application.Services.Interfaces;
+using Confectionery.API.Options;
 using Confectionery.Domain.IRepositories;
 using Confectionery.Infrastructure;
 using Confectionery.Infrastructure.Repositories;
@@ -52,6 +54,11 @@ namespace Confectionery.API.Extensions
             services.AddScoped<IMapper, ServiceMapper>();
         }
 
+        public static void AddServices(this IServiceCollection services)
+        {
+            services.AddScoped<IJwtTokenService, JwtTokenService>();
+        }
+
         public static void AddRepositories(this IServiceCollection services)
         {
             services.AddScoped<IConfectionRepository, ConfectionRepository>();
@@ -63,6 +70,7 @@ namespace Confectionery.API.Extensions
         public static void AddOptions(this IServiceCollection services, IConfiguration configuration)
         {
             services.Configure<EmailSenderOptions>(configuration.GetSection(EmailSenderOptions.EmailSender));
+            services.Configure<JwtOptions>(configuration.GetSection(JwtOptions.Jwt));
         }
     }
 }

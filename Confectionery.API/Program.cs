@@ -33,6 +33,9 @@ builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavi
 // Configure Options
 builder.Services.AddOptions(configuration);
 
+// Configure Services
+builder.Services.AddServices();
+
 // Configure Repositories
 builder.Services.AddRepositories();
 
