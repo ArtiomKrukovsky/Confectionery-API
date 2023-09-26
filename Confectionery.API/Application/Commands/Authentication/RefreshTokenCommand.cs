@@ -26,20 +26,20 @@ namespace Confectionery.API.Application.Commands.Authentication
         public RefreshTokenCommandValidator()
         {
             RuleFor(c => c.AccessToken)
-                .NotEmpty().NotNull().WithMessage("Invalid client request.");
+                .NotEmpty().NotNull().WithMessage("Invalid user request.");
             RuleFor(s => s.RefreshToken)
-                .NotEmpty().NotNull().WithMessage("Invalid client request.");
+                .NotEmpty().NotNull().WithMessage("Invalid user request.");
         }
     }
 
     public class RefreshTokenCommandHandler : IRequestHandler<RefreshTokenCommand, RefreshTokenViewModel>
     {
-        public readonly IClientRepository _clientRepository;
+        public readonly IUserRepository _userRepository;
         public readonly IJwtTokenService _jwtTokenService;
 
-        public RefreshTokenCommandHandler(IClientRepository clientRepository, IJwtTokenService jwtTokenService)
+        public RefreshTokenCommandHandler(IUserRepository userRepository, IJwtTokenService jwtTokenService)
         {
-            _clientRepository = clientRepository ?? throw new ArgumentNullException(nameof(clientRepository));
+            _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
             _jwtTokenService = jwtTokenService ?? throw new ArgumentNullException(nameof(jwtTokenService));
         }
 
@@ -48,14 +48,14 @@ namespace Confectionery.API.Application.Commands.Authentication
             var principal = _jwtTokenService.GetPrincipalFromExpiredToken(request.AccessToken);
             var email = principal.FindFirst(JwtClaimNames.UserNameClaimName);
 
-            var client = await _clientRepository.GetClientByEmailAsync(email!.Value);
+            var user = await _userRepository.GetUserWithTokenByEmailAsync(email!.Value);
 
-            //if (client is null || client.RefreshToken != request.RefreshToken || client.RefreshTokenExpirationTime <= DateTime.Now)
-            //{
-            //    throw new BadHttpRequestException("Invalid client request.");
-            //}
+            if (user is null || user.RefreshToken.Token != request.RefreshToken || user.RefreshToken.ExpirationTime <= DateTime.Now)
+            {
+                throw new BadHttpRequestException("Invalid user request.");
+            }
 
-            var newAccessToken = _jwtTokenService.GenerateAccessToken(client);
+            var newAccessToken = _jwtTokenService.GenerateAccessToken(user);
             var newRefreshToken = _jwtTokenService.GenerateRefreshToken();
 
             return new RefreshTokenViewModel(newAccessToken, newRefreshToken);

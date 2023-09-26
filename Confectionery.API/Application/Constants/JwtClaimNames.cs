@@ -4,5 +4,6 @@
     {
         public const string UserIdClaimName = "userId";
         public const string UserNameClaimName = "userName";
+        public const string UserRoleClaimName = "role";
     }
 }

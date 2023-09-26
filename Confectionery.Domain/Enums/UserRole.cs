@@ -1,6 +1,6 @@
 ﻿namespace Confectionery.Domain.Enums
 {
-    public enum Role: byte
+    public enum UserRole: byte
     {
         Administrator,
         Moderator,

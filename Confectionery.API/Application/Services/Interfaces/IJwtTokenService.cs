@@ -5,7 +5,7 @@ namespace Confectionery.API.Application.Services.Interfaces
 {
     public interface IJwtTokenService
     {
-        string GenerateAccessToken(Client client);
+        string GenerateAccessToken(User client);
         string GenerateRefreshToken();
         ClaimsPrincipal GetPrincipalFromExpiredToken(string token);
     }

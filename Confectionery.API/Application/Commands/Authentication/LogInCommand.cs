@@ -4,6 +4,8 @@ using Confectionery.API.Application.ViewModels.Authentication;
 using Confectionery.Domain.IRepositories;
 using FluentValidation;
 using MediatR;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace Confectionery.API.Application.Commands.Authentication
 {
@@ -34,28 +36,40 @@ namespace Confectionery.API.Application.Commands.Authentication
 
     public class LogInCommandHandler : IRequestHandler<LogInCommand, LogInViewModel>
     {
-        public readonly IClientRepository _clientRepository;
+        public readonly IUserRepository _userRepository;
         public readonly IJwtTokenService _jwtTokenService;
 
-        public LogInCommandHandler(IClientRepository clientRepository, IJwtTokenService jwtTokenService)
+        public LogInCommandHandler(IUserRepository userRepository, IJwtTokenService jwtTokenService)
         {
-            _clientRepository = clientRepository ?? throw new ArgumentNullException(nameof(clientRepository));
+            _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
             _jwtTokenService = jwtTokenService ?? throw new ArgumentNullException(nameof(jwtTokenService));
         }
 
         public async Task<LogInViewModel> Handle(LogInCommand request, CancellationToken cancellationToken)
         {
-            var client = await _clientRepository.GetClientByEmailAsync(request.Email); // todo: get client by email and password
+            var passwordHash = GeneratePasswordHash(request.Password);
+            var user = await _userRepository.GetUserByCredentialsAsync(request.Email, passwordHash);
 
-            if (client is null)
+            if (user is null)
             {
-                throw new ArgumentException($"Authentication failed, client with set credentials not found.");
+                throw new ArgumentException($"Authentication failed, user with set credentials not found.");
             }
 
-            var accessToken = _jwtTokenService.GenerateAccessToken(client);
+            var accessToken = _jwtTokenService.GenerateAccessToken(user);
             var refreshToken = _jwtTokenService.GenerateRefreshToken();
 
             return new LogInViewModel(accessToken, refreshToken);
+        }
+
+        private string GeneratePasswordHash(string password)
+        {
+            var bytes = new UTF8Encoding().GetBytes(password);
+            byte[] hashBytes;
+            using (var algorithm = new SHA512Managed())
+            {
+                hashBytes = algorithm.ComputeHash(bytes);
+            }
+            return Convert.ToBase64String(hashBytes);
         }
     }
 }

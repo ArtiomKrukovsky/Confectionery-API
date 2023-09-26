@@ -10,7 +10,7 @@ namespace Confectionery.Domain.Entities
         public string Email { get; set; }
         public string PasswordHash { get; set; }
 
-        public Role Role { get; set; }
+        public UserRole Role { get; set; }
         public RefreshToken RefreshToken { get; set; }
     }
 }
