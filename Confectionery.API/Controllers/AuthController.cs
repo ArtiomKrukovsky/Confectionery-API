@@ -20,7 +20,7 @@ namespace Confectionery.API.Controllers
         public async Task<ActionResult<LogInViewModel>> LogInAsync([FromBody] LogInCommand logInCommand)
         {
             var result = await _mediator.Send(logInCommand);
-            return Ok(true);
+            return Ok(result);
         }
 
         [HttpPost]

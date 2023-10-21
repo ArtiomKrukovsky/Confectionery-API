@@ -65,6 +65,7 @@ namespace Confectionery.API.Extensions
             services.AddScoped<IConfectionPictureRepository, ConfectionPictureRepository>();
             services.AddScoped<IClientRepository, ClientRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
         }
 
         public static void AddOptions(this IServiceCollection services, IConfiguration configuration)

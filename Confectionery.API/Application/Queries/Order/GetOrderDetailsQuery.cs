@@ -1,6 +1,7 @@
 ﻿using Confectionery.API.Application.Interfaces;
 using Confectionery.API.Application.ViewModels;
 using Confectionery.Domain.IRepositories;
+using Confectionery.Infrastructure.QueryProcessing;
 using MapsterMapper;
 using MediatR;
 using System.Runtime.Serialization;
@@ -10,8 +11,11 @@ namespace Confectionery.API.Application.Queries.Order
     [DataContract]
     public class GetOrderDetailsQuery : IQuery<List<OrderDetailViewModel>>
     {
-        public GetOrderDetailsQuery()
+        public QueryParameters QueryParameters { get; set; }
+
+        public GetOrderDetailsQuery(QueryParameters queryParameters)
         {
+            QueryParameters = queryParameters;
         }
     }
 
@@ -26,12 +30,11 @@ namespace Confectionery.API.Application.Queries.Order
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
-
         public async Task<List<OrderDetailViewModel>> Handle(GetOrderDetailsQuery request, CancellationToken cancellationToken)
         {
-            var ordersWithDetails = await _orderRepository.GetOrdersWithDetailsAsync();
+            var paginatedOrdersWithDetails = await _orderRepository.GetOrdersWithDetailsAsync(request.QueryParameters);
 
-            return _mapper.Map<List<OrderDetailViewModel>>(ordersWithDetails);
+            return _mapper.Map<List<OrderDetailViewModel>>(paginatedOrdersWithDetails.Items);
         }
     }
 }
