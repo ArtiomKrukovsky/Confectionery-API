@@ -1,5 +1,7 @@
 ﻿using Confectionery.API.Application.ViewModels;
+using Confectionery.API.Application.ViewModels.Common;
 using Confectionery.Domain.Entities;
+using Confectionery.Infrastructure.QueryProcessing;
 using Mapster;
 
 namespace Confectionery.API.Mappings
@@ -36,10 +38,24 @@ namespace Confectionery.API.Mappings
                 .Map(d => d.Id, s => s.Id)
                 .Map(d => d.CustomerName, s => s.Client.FullName)
                 .Map(d => d.ProductName, d => d.Confection.Name)
-                //.Map(d => d.Status, d => d.Status)
+                .Map(d => d.Status, d => d.Status)
                 .Map(d => d.CreatedDate, d => d.CreatedDtm)
                 .Map(d => d.UnitPrice, d => d.UnitPrice)
                 .Map(d => d.Quantity, d => d.Quentity);
+
+            config.NewConfig<PagedList<Order>, PagedListViewModel<OrderDetailViewModel>>()
+                .Map(d => d.Items, s => s.Items)
+                .Map(d => d.CurrentPage, s => s.CurrentPage)
+                .Map(d => d.TotalPages, d => d.TotalPages)
+                .Map(d => d.PageSize, d => d.PageSize)
+                .Map(d => d.TotalCount, d => d.TotalCount);
+
+            config.NewConfig<PagedList<Confection>, PagedListViewModel<ConfectionViewModel>>()
+                .Map(d => d.Items, s => s.Items)
+                .Map(d => d.CurrentPage, s => s.CurrentPage)
+                .Map(d => d.TotalPages, d => d.TotalPages)
+                .Map(d => d.PageSize, d => d.PageSize)
+                .Map(d => d.TotalCount, d => d.TotalCount);
         }
     }
 }

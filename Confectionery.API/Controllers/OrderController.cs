@@ -1,6 +1,7 @@
 ﻿using Confectionery.API.Application.Commands.Order;
 using Confectionery.API.Application.Queries.Order;
 using Confectionery.API.Application.ViewModels;
+using Confectionery.API.Application.ViewModels.Common;
 using Confectionery.Infrastructure.QueryProcessing;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -18,7 +19,7 @@ namespace Confectionery.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<OrderDetailViewModel>>> GerOrderDetails([FromQuery] QueryParameters queryParameters)
+        public async Task<ActionResult<PagedListViewModel<OrderDetailViewModel>>> GerOrderDetails([FromQuery] QueryParameters queryParameters)
         {
             var orderDetails = await _mediator.Send(new GetOrderDetailsQuery(queryParameters));
             return orderDetails;

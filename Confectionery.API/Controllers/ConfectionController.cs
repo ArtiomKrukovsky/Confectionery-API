@@ -1,5 +1,6 @@
 ﻿using Confectionery.API.Application.Queries.Confection;
 using Confectionery.API.Application.ViewModels;
+using Confectionery.API.Application.ViewModels.Common;
 using Confectionery.Infrastructure.QueryProcessing;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -25,7 +26,7 @@ namespace Confectionery.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<ConfectionViewModel>>> GetConfectionsAsync([FromQuery] QueryParameters queryParameters)
+        public async Task<ActionResult<PagedListViewModel<ConfectionViewModel>>> GetConfectionsAsync([FromQuery] QueryParameters queryParameters)
         {
             var confections = await _mediator.Send(new GetConfectionsQuery(queryParameters));
             return confections;
