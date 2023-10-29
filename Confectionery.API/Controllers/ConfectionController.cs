@@ -28,8 +28,8 @@ namespace Confectionery.API.Controllers
         [HttpGet]
         public async Task<ActionResult<PagedListViewModel<ConfectionViewModel>>> GetConfectionsAsync([FromQuery] QueryParameters queryParameters)
         {
-            var confections = await _mediator.Send(new GetConfectionsQuery(queryParameters));
-            return confections;
+            var paginatedConfections = await _mediator.Send(new GetConfectionsQuery(queryParameters));
+            return paginatedConfections;
         }
 
         [HttpGet]

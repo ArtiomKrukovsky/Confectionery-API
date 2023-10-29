@@ -7,8 +7,5 @@
         public int TotalPages { get; }
         public int PageSize { get; }
         public int TotalCount { get; }
-
-        public bool HasPreviousPage { get; }
-        public bool HasNextPage { get; }
     }
 }

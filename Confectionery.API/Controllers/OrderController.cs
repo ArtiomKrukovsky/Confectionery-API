@@ -21,8 +21,8 @@ namespace Confectionery.API.Controllers
         [HttpGet]
         public async Task<ActionResult<PagedListViewModel<OrderDetailViewModel>>> GerOrderDetails([FromQuery] QueryParameters queryParameters)
         {
-            var orderDetails = await _mediator.Send(new GetOrderDetailsQuery(queryParameters));
-            return orderDetails;
+            var paginatedOrderDetails = await _mediator.Send(new GetOrderDetailsQuery(queryParameters));
+            return paginatedOrderDetails;
         }
 
         [HttpPost]

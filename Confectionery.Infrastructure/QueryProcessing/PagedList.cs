@@ -11,9 +11,6 @@ namespace Confectionery.Infrastructure.QueryProcessing
         public int PageSize { get; }
         public int TotalCount { get; }
 
-        public bool HasPreviousPage => CurrentPage > 1;
-        public bool HasNextPage => CurrentPage < TotalPages;
-
         public PagedList(
             List<TEntity> items,
             int totalCount,
